@@ -8,6 +8,30 @@ Compliments Results
 
 <!-- Your HTML code goes here! -->
 
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Compliments Results</title>
+    </head>
+    <body>
+        <!-- Your HTML code goes here! -->
 
+        
+Hello {{name}} you selected {{boolcomp}}
+{% if boolcomp == 'yes' %}
+<ul>  
+{% for i in compliments %}
+    
+<li>
+            {{i}}
+        </li>
+    
+{% endfor %}
+</ul>
+        {%  else %}
+        <p>No compliments </p>
+        {% endif %}
+    </body>
+</html>
 
 {% endblock %}

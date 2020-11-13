@@ -6,8 +6,17 @@ import os
 import random
 import requests
 
-app = Flask(__name__)
+from flask_wtf import FlaskForm
+from wtforms import StringField
+from wtforms.validators import DataRequired
+from flask_wtf.csrf import CSRFProtect
 
+
+
+app = Flask(__name__)
+app.config['SECRET_KEY'] = 'f3cfe9ed8fae309f02079dbf'
+csrf = CSRFProtect(app)
+csrf.init_app(app)
 @app.route('/')
 def homepage():
     """A homepage with handy links for your convenience."""
@@ -51,10 +60,15 @@ def compliments():
 @app.route('/compliments_results')
 def compliments_results():
     """Show the user some compliments."""
+    compnumber = int(request.args.get("num_compliments"))
+    rand_compliments = random.sample(list_of_compliments, compnumber)
+
     context = {
         # TODO: Enter your context variables here.
+        "name": request.args.get("users_name"),
+        "boolcomp": request.args.get("wants_compliments"),
+        "compliments": rand_compliments
     }
-
     return render_template('compliments_results.html', **context)
 
 
@@ -69,17 +83,28 @@ animal_to_fact = {
     'lion': 'Female lions do 90 percent of the hunting.',
     'narwhal': 'Narwhal tusks are really an "inside out" tooth.'
 }
+class AnimalForm(FlaskForm):
+    name = StringField('name', validators=[DataRequired()])
+
+
+
 
 @app.route('/animal_facts')
 def animal_facts():
     """Show a form to choose an animal and receive facts."""
 
     # TODO: Collect the form data and save as variables
+    #Using a form from Flask-WTF Library
+    form = AnimalForm()
+    
+
+    animal_select = request.args.get("name")
 
     context = {
         # TODO: Enter your context variables here for:
         # - the list of all animals (get from animal_to_fact)
         # - the chosen animal fact (may be None if the user hasn't filled out the form yet)
+    "animal_list": animal_to_fact
     }
     return render_template('animal_facts.html', **context)
 
