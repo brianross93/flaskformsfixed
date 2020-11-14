@@ -83,8 +83,7 @@ animal_to_fact = {
     'lion': 'Female lions do 90 percent of the hunting.',
     'narwhal': 'Narwhal tusks are really an "inside out" tooth.'
 }
-class AnimalForm(FlaskForm):
-    name = StringField('name', validators=[DataRequired()])
+
 
 
 
@@ -93,19 +92,25 @@ class AnimalForm(FlaskForm):
 def animal_facts():
     """Show a form to choose an animal and receive facts."""
 
-    # TODO: Collect the form data and save as variables
-    #Using a form from Flask-WTF Library
-    form = AnimalForm()
-    
-
-    animal_select = request.args.get("name")
+    animal_select = request.args.get("animal")
+    print(animal_select)
+    animal_return = animal_to_fact.get(animal_select)
 
     context = {
         # TODO: Enter your context variables here for:
         # - the list of all animals (get from animal_to_fact)
         # - the chosen animal fact (may be None if the user hasn't filled out the form yet)
-    "animal_list": animal_to_fact
+    "animal_list": animal_to_fact.keys(),
+    "animal_facts":animal_to_fact,
+    "animal_select": animal_select,
+    "animal_return": animal_return
+
+
     }
+  
+    print(animal_facts)
+    print(animal_select)
+    print(animal_return)
     return render_template('animal_facts.html', **context)
 
 
