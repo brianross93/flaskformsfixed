@@ -160,7 +160,7 @@ def image_filter():
         
         # TODO: Get the user's chosen filter type (whichever one they chose in the form) and save
         # as a variable
-        filter_type = ''
+        filter_type = request.args.get("filter_type")
         
         # Get the image file submitted by the user
         image = request.files.get('users_image')
@@ -176,6 +176,7 @@ def image_filter():
             # TODO: Add context variables here for:
             # - The full list of filter types
             # - The image URL
+
         }
 
         return render_template('image_filter.html', **context)
