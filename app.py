@@ -209,6 +209,7 @@ def gif_search():
     if request.method == 'POST':
         # TODO: Get the search query & number of GIFs requested by the user, store each as a 
         # variable
+        
 
         response = requests.get(
             TENOR_URL,
