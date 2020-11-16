@@ -96,9 +96,6 @@ def animal_facts():
     animal_return = animal_to_fact.get(animal_select)
 
     context = {
-        # TODO: Enter your context variables here for:
-        # - the list of all animals (get from animal_to_fact)
-        # - the chosen animal fact (may be None if the user hasn't filled out the form yet)
     "animal_list": animal_to_fact.keys(),
     "animal_facts":animal_to_fact,
     "animal_select": animal_select,
@@ -153,27 +150,16 @@ def image_filter():
 
     if request.method == 'POST':
         
-        # TODO: Get the user's chosen filter type (whichever one they chose in the form) and save
-        # as a variable
         filter_type = request.form.get("filter_type")
         
         # Get the image file submitted by the user
         image = request.files.get('users_image')
-
-        # TODO: call `save_image()` on the image & the user's chosen filter type, save the returned
-        # value as the new file path
         new_file_path = save_image(image, filter_type)
-
-        # TODO: Call `apply_filter()` on the file path & filter type
         apply_filter(new_file_path, filter_type)
-
-
         image_url = f'/static/images/{image.filename}'
 
         context = {
-            # TODO: Add context variables here for:
-            # - The full list of filter types
-            # - The image URL
+       
             "filter_types": filter_types,
             "image": image_url
 
@@ -183,7 +169,7 @@ def image_filter():
 
     else: # if it's a GET request
         context = {
-            # TODO: Add context variable here for the full list of filter types
+       
             "filter_types": filter_types
 
         }
@@ -202,18 +188,12 @@ pp = PrettyPrinter(indent=4)
 def gif_search():
     """Show a form to search for GIFs and show resulting GIFs from Tenor API."""
     if request.method == 'POST':
-        # TODO: Get the search query & number of GIFs requested by the user, store each as a 
-        # variable
         search_results = request.form.get("search_query")
         gif_number = request.form.get("quantity")
 
         response = requests.get(
             TENOR_URL,
             {
-                # TODO: Add in key-value pairs for:
-                # - 'q': the search query
-                # - 'key': the API key (defined above)
-                # - 'limit': the number of GIFs requested
                 'q': search_results,
                 'key': API_KEY,
                 'limit': gif_number
