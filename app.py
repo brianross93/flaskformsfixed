@@ -93,7 +93,6 @@ def animal_facts():
     """Show a form to choose an animal and receive facts."""
 
     animal_select = request.args.get("animal")
-    print(animal_select)
     animal_return = animal_to_fact.get(animal_select)
 
     context = {
@@ -107,10 +106,6 @@ def animal_facts():
 
 
     }
-  
-    print(animal_facts)
-    print(animal_select)
-    print(animal_return)
     return render_template('animal_facts.html', **context)
 
 
